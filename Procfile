@@ -1,1 +1,1 @@
-web: synchronization keeper.wsgi
+web: gunicorn synchronization.wsgi
