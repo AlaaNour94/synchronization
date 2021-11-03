@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from synchro.views import sync, stock_reading_records
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("v1/sync/", sync),
+    path("v1/records/", stock_reading_records),
 ]
