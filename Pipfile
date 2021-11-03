@@ -10,8 +10,9 @@ requests = "*"
 flake8 = "*"
 pylint = "*"
 black = "==21.9b0"
-pytest = "*"
-
+pytest-django = "*"
+pytest-factoryboy = "*"
+pytest-mock = "*"
 [dev-packages]
 
 [requires]
