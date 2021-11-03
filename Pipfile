@@ -15,6 +15,7 @@ pytest-factoryboy = "*"
 pytest-mock = "*"
 isort = "*"
 gunicorn = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
