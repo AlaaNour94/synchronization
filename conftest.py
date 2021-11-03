@@ -1,5 +1,7 @@
 import pytest
 
+from synchro.tests.factories import *  # noqa
+
 
 @pytest.fixture(autouse=True)
 def enable_db_access_for_all_tests(db):
@@ -9,4 +11,5 @@ def enable_db_access_for_all_tests(db):
 @pytest.fixture
 def api_client():
     from rest_framework.test import APIClient
+
     return APIClient()

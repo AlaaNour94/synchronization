@@ -13,6 +13,8 @@ black = "==21.9b0"
 pytest-django = "*"
 pytest-factoryboy = "*"
 pytest-mock = "*"
+isort = "*"
+
 [dev-packages]
 
 [requires]
