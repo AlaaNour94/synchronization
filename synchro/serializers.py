@@ -6,4 +6,4 @@ from synchro.models import StockReading
 class StockReadingSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockReading
-        fields = ["id", "updated_at", "expiration_date"]
+        fields = ["gtin", "updated_at", "expiration_date"]
