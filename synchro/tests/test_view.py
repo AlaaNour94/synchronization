@@ -28,7 +28,7 @@ class TestSunchronization:
         stock_reading_factory(updated_at=timezone.now() - timedelta(days=7))
         last_sync_date = timezone.now() - timedelta(days=5)
 
-        generated_at = timezone.now()
+        updated_at = timezone.now()
 
         response = api_client.post(
             "/v1/sync/",
@@ -36,7 +36,7 @@ class TestSunchronization:
                 "last_sync_date": last_sync_date,
                 "newly_created_records": [
                     {
-                        "generated_at": generated_at,
+                        "updated_at": updated_at,
                         "gtin": reading1.gtin,
                         "expiration_date": timezone.now() - timedelta(days=1),
                     }
@@ -45,7 +45,7 @@ class TestSunchronization:
         )
         assert len(response.json()["data"]) == 0
         reading1.refresh_from_db()
-        assert reading1.updated_at == generated_at
+        assert reading1.updated_at == updated_at
 
     def test_client_can_write_and_get_new_data(self, api_client, stock_reading_factory):
 
@@ -54,7 +54,7 @@ class TestSunchronization:
         stock_reading_factory(updated_at=timezone.now() - timedelta(days=7))
         last_sync_date = timezone.now() - timedelta(days=5)
 
-        generated_at = timezone.now()
+        updated_at = timezone.now()
 
         response = api_client.post(
             "/v1/sync/",
@@ -62,7 +62,7 @@ class TestSunchronization:
                 "last_sync_date": last_sync_date,
                 "newly_created_records": [
                     {
-                        "generated_at": generated_at,
+                        "updated_at": updated_at,
                         "gtin": reading1.gtin,
                         "expiration_date": timezone.now() - timedelta(days=1),
                     }
@@ -71,13 +71,13 @@ class TestSunchronization:
         )
         assert len(response.json()["data"]) == 1
         reading1.refresh_from_db()
-        assert reading1.updated_at == generated_at
+        assert reading1.updated_at == updated_at
 
     def test_client_can_create_new_gtin(self, api_client, stock_reading_factory):
 
-        generated_at = timezone.now()
+        updated_at = timezone.now()
 
-        reading1 = stock_reading_factory(updated_at=generated_at)
+        reading1 = stock_reading_factory(updated_at=updated_at)
 
         response = api_client.post(
             "/v1/sync/",
@@ -85,12 +85,12 @@ class TestSunchronization:
                 "last_sync_date": timezone.now() - timedelta(days=5),
                 "newly_created_records": [
                     {
-                        "generated_at": timezone.now() - timedelta(days=5),
+                        "updated_at": timezone.now() - timedelta(days=5),
                         "gtin": reading1.gtin,
                         "expiration_date": timezone.now() - timedelta(days=1),
                     },
                     {
-                        "generated_at": generated_at,
+                        "updated_at": updated_at,
                         "gtin": "new_gtin",
                         "expiration_date": timezone.now() - timedelta(days=1),
                     },
@@ -99,5 +99,5 @@ class TestSunchronization:
         )
         assert len(response.json()["data"]) == 1
         reading1.refresh_from_db()
-        assert reading1.updated_at == generated_at
+        assert reading1.updated_at == updated_at
         assert StockReading.objects.count() == 2
