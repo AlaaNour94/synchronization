@@ -28,7 +28,7 @@ def sync(request):
         item.gtin: item
         for item in StockReading.objects.filter(
             Q(updated_at__gt=last_sync_date) | Q(gtin__in=[record["gtin"] for record in newly_created_records])
-        )
+        ).order_by("-updated_at")
     }
 
     for record in newly_created_records:
@@ -69,5 +69,5 @@ def sync(request):
 
 @api_view(["GET"])
 def stock_readings(request):
-    readings = StockReading.objects.all()
+    readings = StockReading.objects.all().order_by("-updated_at")
     return Response({"data": StockReadingSerializer(readings, many=True).data})
